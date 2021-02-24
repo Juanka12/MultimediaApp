@@ -1,0 +1,28 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Menú
+    </ion-title>
+  </ion-toolbar>  
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-item>
+    <ion-searchbar showCancelButton="focus"></ion-searchbar>
+  </ion-item>
+  <ion-item>
+    <ion-list>
+      <ion-item *ngFor="let item of medias">
+        <ion-thumbnail slot="start">
+          <ion-img [src]="item.src"></ion-img>
+        </ion-thumbnail>
+        <ion-label>{{item.text}}</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-item>
+</ion-content>
+
+
+<!-- https://api.themoviedb.org/3/discover/movie?api_key=XXXXX&with_genres=27 -->
+<!-- http://api.steampowered.com/ISteamApps/GetAppList/v0002/?tag=genre -->
+<!-- https://steamcdn-a.akamaihd.net/steam/apps/appid/library_600x900_2x.jpg -->
