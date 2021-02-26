@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Multimedia } from '../model/Multimedia';
 
@@ -8,7 +9,7 @@ export class MediaService {
 
   private apiKey:String = "4d9eb1e1a38c5254e6ae54d958c58a47";
   
-  constructor() { }
+  constructor(private http:HttpClient) { }
 
   public get pelis(){
     var lista:Multimedia[] = [];
