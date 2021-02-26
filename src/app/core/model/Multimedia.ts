@@ -1,6 +1,6 @@
 export class Multimedia {
 
-    constructor() {
+    constructor(private src:String,private text:String) {
         
     }
 }

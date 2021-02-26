@@ -10,8 +10,10 @@ export class HomePage {
 
   constructor(private mediaService:MediaService) {}
 
-  public get medias() {
-    return this.mediaService.medias;
+  public get pelis() {
+    return this.mediaService.pelis;
   }
-  
+  public get juegos() {
+    return this.mediaService.pelis;
+  }
 }

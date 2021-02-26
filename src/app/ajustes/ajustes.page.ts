@@ -7,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AjustesPage implements OnInit {
 
+  private tema:boolean = false;
   constructor() { }
 
   ngOnInit() {
   }
 
+  public toggleTema(){
+    this.tema=!this.tema;
+  }
 }

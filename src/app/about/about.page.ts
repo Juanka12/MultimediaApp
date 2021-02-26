@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AboutPage implements OnInit {
 
+  private aboutText:String[] = ["Projecto de la asignatura programación móviles","Autor : Juan Carlos"];
   constructor() { }
 
   ngOnInit() {
