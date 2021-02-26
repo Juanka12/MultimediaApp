@@ -8,27 +8,29 @@
 
 <ion-content [fullscreen]="true">
   <ion-item>
-    <ion-searchbar showCancelButton="focus"></ion-searchbar>
+    <ion-searchbar showCancelButton="focus" (search)="search($event.target.value)"></ion-searchbar>
   </ion-item>
+
   <ion-item><ion-label class="ion-text-center">Películas</ion-label></ion-item>
   <ion-item>
     <ion-list>
-      <ion-item button *ngFor="let item of pelis" (click)="pasarItem(item)" routerLink="/media-details">
+      <ion-item button *ngFor="let item of (searchResultMovies | async)" (click)="pasarItem(item)" routerLink="/media-details">
         <ion-thumbnail slot="start">
-          <ion-img [src]="item.src"></ion-img>
+          <ion-img src="https://image.tmdb.org/t/p/w500{{item.poster_path}}"></ion-img>
         </ion-thumbnail>
-        <ion-label>{{item.text}}</ion-label>
+        <ion-label>{{item.original_title}}</ion-label>
       </ion-item>
     </ion-list>
   </ion-item>
+
   <ion-item><ion-label class="ion-text-center">VideoJuegos</ion-label></ion-item>
   <ion-item>
     <ion-list>
-      <ion-item *ngFor="let item of pelis" routerLink="/media-details">
+      <ion-item *ngFor="let item of (searchResultGames | async)" routerLink="/media-details">
         <ion-thumbnail slot="start">
-          <ion-img [src]="item.src"></ion-img>
+          <ion-img [src]="item.background_image"></ion-img>
         </ion-thumbnail>
-        <ion-label>{{item.text}}</ion-label>
+        <ion-label>{{item.name}}</ion-label>
       </ion-item>
     </ion-list>
   </ion-item>
@@ -39,3 +41,4 @@
 <!-- http://api.steampowered.com/ISteamApps/GetAppList/v0002/?tag=RPG -->
 <!-- https://steamcdn-a.akamaihd.net/steam/apps/$appid/library_600x900_2x.jpg -->
 <!-- https://api.rawg.io/api/games?search=$game -->
+<!-- http://www.giantbomb.com/api/search/?api_key=$KEY&format=json&query=$title -->
