@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MediaService } from '../core/services/media.service';
 
 @Component({
   selector: 'app-home',
@@ -7,10 +8,10 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  constructor(private mediaService:MediaService) {}
 
   public get medias() {
-    return 
+    return this.mediaService.medias;
   }
   
 }
