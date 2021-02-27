@@ -14,14 +14,11 @@ export class HomePage {
   private searchResultMovies: Observable<any>;
   private searchResultGames: Observable<any>;
 
-  constructor(private mediaService: MediaService, private router: Router) {}
+  constructor(private mediaService: MediaService, private router: Router) {
+    this.searchResultMovies = this.mediaService.getRandomMovies("27");
+    this.searchResultGames = this.mediaService.getRandomGames("4");
+  }
 
-  public get pelis() {
-    return this.mediaService.pelis;
-  }
-  public get juegos() {
-    return this.mediaService.pelis;
-  }
   public pasarItem(media: Multimedia) {
     let navigationExtras: NavigationExtras = {
       state: {
@@ -33,5 +30,9 @@ export class HomePage {
   search(toSearch){
     this.searchResultMovies = this.mediaService.searchMovie(toSearch);
     this.searchResultGames = this.mediaService.searchGame(toSearch);
+  }
+  onCancel(){
+    this.searchResultMovies = this.mediaService.getRandomMovies("27");
+    this.searchResultGames = this.mediaService.getRandomGames("4");
   }
 }
