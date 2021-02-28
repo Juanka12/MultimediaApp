@@ -1,7 +1,7 @@
 export class Multimedia {
 
     private _trailer:string;
-    constructor(private _src:string,private _text:string,private _title:string, private _genre:string[],private _imdbID:string,private _rate:string,private _type:string) {   
+    constructor(private _src:string,private _text:string,private _title:string, private _genre:string[],private _id:string,private _rate:string,private _type:string) {   
     }
     public set trailer(value){
         this._trailer = value;
@@ -18,8 +18,8 @@ export class Multimedia {
     public get genre():string[] {
         return this._genre;
     }
-    public get imdbID():string {
-        return this._imdbID;
+    public get id():string {
+        return this._id;
     }
     public get rate():string {
         return this._rate;

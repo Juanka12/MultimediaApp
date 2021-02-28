@@ -19,10 +19,16 @@ export class HomePage {
     this.searchResultGames = this.mediaService.getRandomGames("4");
   }
 
-  public pasarItem(media) {
+  public pasarItem(media:Multimedia) {
     console.log(media);
-
-    var promesa = this.mediaService.getMovieData(media);
+    var promesa = null;
+    if (media.type=="movie") {
+      console.log("movie");
+      promesa = this.mediaService.getMovieData(media);
+    }else{
+      console.log("game");
+      promesa = this.mediaService.getGameData(media);
+    }
     
     let navigationExtras: NavigationExtras = {
       state: {

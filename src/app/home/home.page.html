@@ -27,7 +27,7 @@
   <ion-item><ion-label class="ion-text-center">VideoJuegos</ion-label></ion-item>
   <ion-item>
     <ion-list>
-      <ion-item *ngFor="let item of (searchResultGames)" routerLink="/media-details">
+      <ion-item *ngFor="let item of (searchResultGames)" (click)="pasarItem(item)" routerLink="/media-details">
         <ion-thumbnail slot="start">
           <ion-img src={{item.src}}></ion-img>
         </ion-thumbnail>

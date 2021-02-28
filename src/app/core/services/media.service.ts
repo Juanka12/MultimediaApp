@@ -15,7 +15,7 @@ export class MediaService {
   apiKey2 = "fd781264";
   url2 = 'http://www.omdbapi.com/';
 
-  private urlGame:String = "https://api.rawg.io/api/games?"
+  private urlGame:String = "https://api.rawg.io/api/games"
   
   constructor(private http:HttpClient) { }
 
@@ -34,7 +34,7 @@ export class MediaService {
   }
   public searchGame(title:string) {
     let gameList:Array<Multimedia> = new Array<Multimedia>();
-    let a = this.http.get(this.urlGame+"search="+encodeURI(title)).pipe(map(results=>results["results"]));
+    let a = this.http.get(this.urlGame+"?search="+encodeURI(title)).pipe(map(results=>results["results"]));
     a.subscribe({
       next(x){
         for (let index = 0; index < x.length; index++) {
@@ -60,7 +60,7 @@ export class MediaService {
   }
   public getRandomGames(genre:string) {
     let gameList:Array<Multimedia> = new Array<Multimedia>();
-    let a = this.http.get(this.urlGame+"genres="+genre).pipe(map(results=>results["results"]));
+    let a = this.http.get(this.urlGame+"?genres="+genre).pipe(map(results=>results["results"]));
     a.subscribe({
       next(x){
         for (let index = 0; index < x.length; index++) {
@@ -73,26 +73,26 @@ export class MediaService {
   }
   public getMovieData(media:Multimedia) {
     return new Promise((resolve,reject) => {
-      this.http.get(this.urlMovie+"movie/"+media.imdbID+"?api_key="+this.apiKeyMovie+"&language=es").subscribe(async response => {
+      this.http.get(this.urlMovie+"movie/"+media.id+"?api_key="+this.apiKeyMovie+"&language=es").subscribe(async response => {
         console.log(response);
         var mediaTemp = new Multimedia(media.src,response["overview"],response["title"],response["genres"],response["imdb_id"],response["vote_average"],media.type);
-        let trailer = await this.getMovieTrailer(media.imdbID);
+        let trailer = await this.getMovieTrailer(media.id);
         mediaTemp.trailer = trailer;
         resolve(mediaTemp);
       });
     })
   }
-   // createMedia(media):Promise<any> {
-  //   return new Promise((resolve,reject) => {
-  //     this.mediaService.getMovieData(media.imdbID).subscribe(async response => {
-  //       console.log(response);
-  //       var mediaTemp = new Multimedia(media.src,response["overview"],response["title"],response["genres"],response["imdb_id"],response["vote_average"],media.type);
-  //       let trailer = await this.mediaService.getMovieTrailer(media.imdbID);
-  //       mediaTemp.trailer = trailer;
-  //       resolve(mediaTemp);
-  //     })
-  //   })
-  // }
+  public getGameData(media:Multimedia){
+    return new Promise((resolve,reject) => {
+      this.http.get(this.urlGame+"/"+media.id).subscribe(async response => {
+        console.log(response);
+        var mediaTemp = new Multimedia(media.src,response["description_raw"],response["name"],response["genres"],response["id"],response["metacritic"],"game");
+        let trailer = response["clip"]["clip"];
+        mediaTemp.trailer=trailer;
+        resolve(mediaTemp)
+      })
+    })
+  }
   public getMovieTrailer(id:string) {
     return new Promise((resolve,reject) => {
       this.http.get(this.urlMovie+"movie/"+id+"/videos?api_key="+this.apiKeyMovie).subscribe(res => {
