@@ -11,18 +11,22 @@ import { Observable } from 'rxjs';
 })
 export class HomePage {
 
-  private searchResultMovies: Observable<any>;
-  private searchResultGames: Observable<any>;
+  private searchResultMovies;
+  private searchResultGames;
 
   constructor(private mediaService: MediaService, private router: Router) {
     this.searchResultMovies = this.mediaService.getRandomMovies("27");
     this.searchResultGames = this.mediaService.getRandomGames("4");
   }
 
-  public pasarItem(media: Multimedia) {
+  public pasarItem(media) {
+    console.log(media);
+
+    var promesa = this.mediaService.getMovieData(media);
+    
     let navigationExtras: NavigationExtras = {
       state: {
-        pasarMedia: media,
+        pasarMedia: promesa,
       },
     };
     this.router.navigate(['media-details'], navigationExtras);
