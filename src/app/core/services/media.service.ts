@@ -84,12 +84,12 @@ export class MediaService {
   }
   public getGameData(media:Multimedia){
     return new Promise((resolve,reject) => {
-      this.http.get(this.urlGame+"/"+media.id).subscribe(async response => {
+      this.http.get(this.urlGame+"/"+media.id).subscribe(response => {
         console.log(response);
         var mediaTemp = new Multimedia(media.src,response["description_raw"],response["name"],response["genres"],response["id"],response["metacritic"],"game");
         let trailer = response["clip"]["clip"];
         mediaTemp.trailer=trailer;
-        resolve(mediaTemp)
+        resolve(mediaTemp);
       })
     })
   }

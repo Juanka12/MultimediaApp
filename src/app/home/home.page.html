@@ -16,7 +16,6 @@
     <ion-list>
       <ion-item button *ngFor="let item of (searchResultMovies)" (click)="pasarItem(item)" routerLink="/media-details">
         <ion-thumbnail slot="start">
-          <!-- <ion-img src="https://image.tmdb.org/t/p/w500{{item.poster_path}}"></ion-img> -->
           <ion-img src={{item.src}}></ion-img>
         </ion-thumbnail>
         <ion-label>{{item.title}}</ion-label>
@@ -36,10 +35,3 @@
     </ion-list>
   </ion-item>
 </ion-content>
-
-<!-- https://image.tmdb.org/t/p/w500/$poster_path -->
-<!-- https://api.themoviedb.org/3/discover/movie?api_key=$XXXXX&with_genres=$XX -->
-<!-- http://api.steampowered.com/ISteamApps/GetAppList/v0002/?tag=RPG -->
-<!-- https://steamcdn-a.akamaihd.net/steam/apps/$appid/library_600x900_2x.jpg -->
-<!-- https://api.rawg.io/api/games?search=$game -->
-<!-- http://www.giantbomb.com/api/search/?api_key=$KEY&format=json&query=$title -->
