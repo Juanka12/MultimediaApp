@@ -5,14 +5,32 @@
 </ion-header>
 
 <ion-content *ngIf="checkPromise">
-  <ion-card>
+  <ion-card *ngIf="media.type=='movie'">
+    <ion-card-header>
+      <ion-badge class="genreList" *ngFor="let item of media.genre">{{item["name"]}}</ion-badge>
+      <ion-item>
+        <ion-card-title>{{media.title}}</ion-card-title>
+        <ion-toggle [ngModel]="saved" slot="end" (ionChange)="saveFav()"></ion-toggle>
+      </ion-item>
+    </ion-card-header>
+    <ion-item>
+      <ion-img class="posterPreview" slot="start" src={{media.src}}></ion-img>
+      <ion-label text-wrap>{{media.text}}</ion-label>
+    </ion-item>
+  </ion-card>
+
+  <ion-card *ngIf="media.type=='game'">
     <ion-img src={{media.src}}></ion-img>
     <ion-card-header>
-      <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-      <ion-card-title>{{media.title}}</ion-card-title>
+      <ion-badge class="genreList" *ngFor="let item of media.genre">{{item["name"]}}</ion-badge>
+      <ion-item>
+        <ion-card-title>{{media.title}}</ion-card-title>
+        <ion-toggle [ngModel]="saved" slot="end" (ionChange)="saveFav()"></ion-toggle>
+      </ion-item>
     </ion-card-header>
     <ion-card-content>
       {{media.text}}
     </ion-card-content>
+    <iframe src={{media.trailer}} frameborder="0" allowfullscreen></iframe>
   </ion-card>
 </ion-content>

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { MediaService } from '../core/services/media.service';
 import { Multimedia } from '../core/model/Multimedia';
 import { NavigationExtras, Router } from '@angular/router';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -11,22 +10,29 @@ import { Observable } from 'rxjs';
 })
 export class HomePage {
 
-  private searchResultMovies;
-  private searchResultGames;
+  private _searchResultMovies;
+  private _searchResultGames;
+
+  private _loadedGames:boolean = false;
+  private _loadedMovies:boolean = false;
 
   constructor(private mediaService: MediaService, private router: Router) {
-    this.searchResultMovies = this.mediaService.getRandomMovies("27");
-    this.searchResultGames = this.mediaService.getRandomGames("4");
+    this.mediaService.getRandomMovies("27").then((res)=>{
+      this._searchResultMovies = res;
+      this._loadedMovies=true;
+    });
+    this.mediaService.getRandomGames("4").then((res)=>{
+      this._searchResultGames = res;
+      this._loadedGames=true;
+    });
   }
 
   public pasarItem(media:Multimedia) {
     console.log(media);
     var promesa = null;
     if (media.type=="movie") {
-      console.log("movie");
       promesa = this.mediaService.getMovieData(media);
     }else{
-      console.log("game");
       promesa = this.mediaService.getGameData(media);
     }
     
@@ -37,12 +43,39 @@ export class HomePage {
     };
     this.router.navigate(['media-details'], navigationExtras);
   }
-  search(toSearch){
-    this.searchResultMovies = this.mediaService.searchMovie(toSearch);
-    this.searchResultGames = this.mediaService.searchGame(toSearch);
+  public search(toSearch){
+    this._loadedGames=false;
+    this._loadedMovies=false;
+    this.mediaService.searchMovie(toSearch).then((res)=>{
+      this._searchResultMovies = res;
+      this._loadedMovies=true;
+    });
+    this.mediaService.searchGame(toSearch).then((res)=>{
+      this._searchResultGames = res;
+      this._loadedGames=true;
+    });
   }
-  onCancel(){
-    this.searchResultMovies = this.mediaService.getRandomMovies("27");
-    this.searchResultGames = this.mediaService.getRandomGames("4");
+  public onCancel(){
+    this.mediaService.getRandomMovies("27").then((res)=>{
+      this._searchResultMovies = res;
+      this._loadedMovies=true;
+    });
+    this.mediaService.getRandomGames("4").then((res)=>{
+      this._searchResultGames = res;
+      this._loadedGames=true;
+    });
+  }
+
+  public get searchResultMovies(){
+    return this._searchResultMovies;
+  }
+  public get searchResultGames(){
+    return this._searchResultGames;
+  }
+  public get loadedMovies(){
+    return this._loadedMovies;
+  }
+  public get loadedGames(){
+    return this._loadedGames;
   }
 }

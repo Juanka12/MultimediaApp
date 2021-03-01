@@ -13,7 +13,7 @@ import { MediaDetailsPage } from './media-details.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    MediaDetailsPageRoutingModule
+    MediaDetailsPageRoutingModule,
   ],
   declarations: [MediaDetailsPage]
 })
