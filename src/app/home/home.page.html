@@ -28,7 +28,7 @@
   <ion-item *ngIf="!loadedGames"><ion-spinner class="spinner" paused={{loadedGames}}></ion-spinner></ion-item>
   <ion-item *ngIf="loadedGames">
     <ion-list>
-      <ion-item *ngFor="let item of (searchResultGames)" (click)="pasarItem(item)" routerLink="/media-details">
+      <ion-item button *ngFor="let item of (searchResultGames)" (click)="pasarItem(item)" routerLink="/media-details">
         <ion-thumbnail slot="start">
           <ion-img src={{item.src}}></ion-img>
         </ion-thumbnail>

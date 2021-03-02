@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Multimedia } from '../core/model/Multimedia';
+import { FavService } from '../core/services/fav.service';
 
 @Component({
   selector: 'app-media-details',
@@ -12,14 +13,15 @@ export class MediaDetailsPage implements OnInit {
 
   private _media:Multimedia;
   private _checkPromise:boolean;
-  private _saved:boolean = false;
+  private _saved:boolean;
   private _cleanUrl:any;
   
-  constructor(private router:Router,private activeRoute:ActivatedRoute,private sanitizer:DomSanitizer) {
+  constructor(private router:Router,private activeRoute:ActivatedRoute,private sanitizer:DomSanitizer,private fav:FavService) {
     this.activeRoute.queryParamMap.subscribe(()=> {
       var pro:Promise<any> = this.router.getCurrentNavigation().extras.state.pasarMedia;
       pro.then((res)=>{
         this._media = res;
+        this._saved = this.fav.checkFav(this.media);
         let url = this.media.trailer;
         this._cleanUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
         this._checkPromise = true;
@@ -50,11 +52,9 @@ export class MediaDetailsPage implements OnInit {
   public saveFav(){
     this.saved=!this.saved;
     if (this.saved) {
-      console.log(this.saved);
-      
+      this.fav.saveFav(this.media);
     }else{
-      console.log(this.saved);
-      
+      this.fav.deleteFav(this.media);
     }
   }
 }

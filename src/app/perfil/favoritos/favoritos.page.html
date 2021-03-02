@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>favoritos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item><ion-label class="ion-text-center">Lista</ion-label></ion-item>
+    <ion-list>
+      <ion-item button *ngFor="let item of (favMovies)" (click)="pasarItem(item)" routerLink="/media-details">
+        <ion-thumbnail slot="start">
+          <ion-img src={{item.src}}></ion-img>
+        </ion-thumbnail>
+        <ion-label>{{item.title}}</ion-label>
+      </ion-item>
+    </ion-list>
+
+  <!-- <ion-item><ion-label class="ion-text-center">VideoJuegos</ion-label></ion-item>
+    <ion-list>
+      <ion-item *ngFor="let item of (favGames)" (click)="pasarItem(item)" routerLink="/media-details">
+        <ion-thumbnail slot="start">
+          <ion-img src={{item.src}}></ion-img>
+        </ion-thumbnail>
+        <ion-label>{{item.title}}</ion-label>
+      </ion-item>
+    </ion-list> -->
+</ion-content>

@@ -109,7 +109,7 @@ export class MediaService {
         if (res["results"].length==0) {
           trailer = null;
         }else{
-          trailer = "https://www.youtube.com/embed/"+res["results"][0]["key"];
+          trailer = "https://www.youtube.com/embed/"+res["results"][0]["key"]+"?controls=0";
         }
         resolve(trailer);
       });
