@@ -27,4 +27,7 @@ export class Multimedia {
     public get type():string {
         return this._type;
     }
+    public get trailer():string {
+        return this._trailer;
+    }
 }

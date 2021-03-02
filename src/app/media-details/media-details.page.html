@@ -6,6 +6,7 @@
 
 <ion-content *ngIf="checkPromise">
   <ion-card *ngIf="media.type=='movie'">
+    <iframe [src]="cleanUrl"></iframe>
     <ion-card-header>
       <ion-badge class="genreList" *ngFor="let item of media.genre">{{item["name"]}}</ion-badge>
       <ion-item>

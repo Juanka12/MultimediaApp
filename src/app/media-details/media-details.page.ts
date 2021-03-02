@@ -1,4 +1,5 @@
-import { Component, OnInit, SecurityContext } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Multimedia } from '../core/model/Multimedia';
 
@@ -12,21 +13,27 @@ export class MediaDetailsPage implements OnInit {
   private _media:Multimedia;
   private _checkPromise:boolean;
   private _saved:boolean = false;
-
-  constructor(private router:Router,private activeRoute:ActivatedRoute) {
+  private _cleanUrl:any;
+  
+  constructor(private router:Router,private activeRoute:ActivatedRoute,private sanitizer:DomSanitizer) {
     this.activeRoute.queryParamMap.subscribe(()=> {
       var pro:Promise<any> = this.router.getCurrentNavigation().extras.state.pasarMedia;
       pro.then((res)=>{
         this._media = res;
+        let url = this.media.trailer;
+        this._cleanUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
         this._checkPromise = true;
         console.log(this.media);
       })
     })
-   }
+  }
 
   ngOnInit() {
   }
 
+  public get cleanUrl(){
+    return this._cleanUrl;
+  }
   public get media(){
     return this._media;
   }

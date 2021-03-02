@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { stringify } from '@angular/compiler/src/util';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Multimedia } from '../model/Multimedia';
@@ -80,7 +81,7 @@ export class MediaService {
         console.log(response);
         var mediaTemp = new Multimedia(media.src,response["overview"],response["title"],response["genres"],response["imdb_id"],response["vote_average"],"movie");
         let trailer = await this.getMovieTrailer(media.id);
-        mediaTemp.trailer = trailer;
+        mediaTemp.trailer = trailer.toString();
         resolve(mediaTemp);
       });
     })
