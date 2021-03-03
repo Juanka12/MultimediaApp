@@ -3,7 +3,6 @@
     <ion-title>mediaDetails</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content *ngIf="checkPromise">
   <ion-item *ngIf="!checkPromise"><ion-spinner class="spinner" paused={{checkPromise}}></ion-spinner></ion-item>
   <ion-card *ngIf="media.type=='movie'">
@@ -12,7 +11,9 @@
       <ion-badge class="genreList" *ngFor="let item of media.genre">{{item["name"]}}</ion-badge>
       <ion-item>
         <ion-card-title>{{media.title}}</ion-card-title>
-        <ion-toggle [ngModel]="saved" slot="end" (ngModelChange)="saveFav()"></ion-toggle>
+        <ion-button class="favButton" fill="clear" slot="end" (click)="saveFav()">
+          <ion-icon [name]="saved ? 'bookmark' : 'bookmark-outline'"></ion-icon>
+        </ion-button>
       </ion-item>
     </ion-card-header>
     <ion-item>
@@ -27,7 +28,9 @@
       <ion-badge class="genreList" *ngFor="let item of media.genre">{{item["name"]}}</ion-badge>
       <ion-item>
         <ion-card-title>{{media.title}}</ion-card-title>
-        <ion-toggle [ngModel]="saved" slot="end" (ngModelChange)="saveFav()"></ion-toggle>
+        <ion-button class="favButton" fill="clear" slot="end" (click)="saveFav()">
+          <ion-icon [name]="saved ? 'bookmark' : 'bookmark-outline'"></ion-icon>
+        </ion-button>
       </ion-item>
     </ion-card-header>
     <ion-item><ion-label text-wrap>{{media.text}}</ion-label></ion-item>
