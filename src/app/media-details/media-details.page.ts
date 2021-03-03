@@ -36,7 +36,7 @@ export class MediaDetailsPage implements OnInit {
   public get cleanUrl(){
     return this._cleanUrl;
   }
-  public get media(){
+  public get media():Multimedia{
     return this._media;
   }
   public get checkPromise(){
