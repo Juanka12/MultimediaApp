@@ -16,7 +16,6 @@ export class MediaDetailsPage implements OnInit {
   private _saved:boolean;
   private _cleanUrl:any;
   private _MAX_RATE:number = 5;
-  private _MIN_RATE:number = 0;
   
   constructor(private router:Router,private activeRoute:ActivatedRoute,private sanitizer:DomSanitizer,private fav:FavService) {
     this.activeRoute.queryParamMap.subscribe(()=> {
@@ -47,7 +46,6 @@ export class MediaDetailsPage implements OnInit {
   get fullStars(): any[] {
     return Array(this.numberOfFullStars);
   }
-
   public get cleanUrl(){
     return this._cleanUrl;
   }

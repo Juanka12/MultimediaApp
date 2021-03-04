@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-ajustes',
@@ -6,14 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./ajustes.page.scss'],
 })
 export class AjustesPage implements OnInit {
+  private tema: boolean = false;
 
-  private tema:boolean = false;
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  public toggleTema(){
-    this.tema=!this.tema;
+  public toggleTema() {
+    this.tema = !this.tema;
   }
 }
