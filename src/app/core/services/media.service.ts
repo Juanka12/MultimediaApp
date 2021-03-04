@@ -24,7 +24,7 @@ export class MediaService {
     return new Promise((resolve,reject)=>{
       this.http.get(this.urlMovie2+"?apikey="+this.apiMovieKey2+"&s="+encodeURI(title)+"&type=movie").toPromise().then(res => {
         res["Search"].forEach(movie => {
-          movieList.push(new Multimedia(movie["Poster"],"",movie["Title"],[],movie["imdbID"],"","movie"));
+          movieList.push(new Multimedia(movie["Poster"],"",movie["Title"],[],movie["imdbID"],0,"movie"));
         });
         resolve(movieList);
       },
@@ -90,7 +90,7 @@ export class MediaService {
     return new Promise((resolve,reject) => {
       this.http.get(this.urlGame+"/"+media.id).subscribe(response => {
         console.log(response);
-        var mediaTemp = new Multimedia(media.src,response["description_raw"],response["name"],response["genres"],response["id"],response["metacritic"],"game");
+        var mediaTemp = new Multimedia(media.src,response["description_raw"],response["name"],response["genres"],response["id"],Number(response["metacritic"])/10,"game");
         let trailer;
         if (response["clip"]==null) {
           trailer = null;

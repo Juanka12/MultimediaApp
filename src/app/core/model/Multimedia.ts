@@ -1,7 +1,7 @@
 export class Multimedia {
 
     private _trailer:string;
-    constructor(private _src:string,private _text:string,private _title:string, private _genre:string[],private _id:string,private _rate:string,private _type:string) {   
+    constructor(private _src:string,private _text:string,private _title:string, private _genre:string[],private _id:string,private _rate:number,private _type:string) {   
     }
     public set trailer(value){
         this._trailer = value;
@@ -21,7 +21,7 @@ export class Multimedia {
     public get id():string {
         return this._id;
     }
-    public get rate():string {
+    public get rate():number {
         return this._rate;
     }
     public get type():string {

@@ -36,13 +36,13 @@ export class MediaDetailsPage implements OnInit {
   }
 
   private get numberOfEmptyStars(): number {
-    return this._MAX_RATE - Math.floor(Number(this.media.rate)/2);
+    return this._MAX_RATE - Math.floor(this.media.rate/2);
   }
   get emptyStars(): any[] {
     return Array(this.numberOfEmptyStars);
   }
   private get numberOfFullStars(): number {
-    return Math.floor(Number(this.media.rate)/2);
+    return Math.floor(this.media.rate/2);
   }
   get fullStars(): any[] {
     return Array(this.numberOfFullStars);

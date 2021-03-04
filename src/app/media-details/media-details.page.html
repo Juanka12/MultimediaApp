@@ -45,5 +45,13 @@
     <video controls autoplay class="trailer">
       <source [src]="cleanUrl" type="video/mp4"/>
     </video>
+    <ion-item style="margin: 2%;">
+      <ng-container *ngFor="let fullstar of fullStars">
+        <ion-icon name="star" class="starRate"></ion-icon>
+      </ng-container>
+    <ng-container *ngFor="let emptyStar of emptyStars">
+      <ion-icon name="star-outline" ></ion-icon>
+    </ng-container>
+    </ion-item>
   </ion-card>
 </ion-content>
