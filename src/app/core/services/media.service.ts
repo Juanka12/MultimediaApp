@@ -15,6 +15,8 @@ export class MediaService {
   private apiMovieKey2:String = "fd781264";
   private urlMovie2:String = 'http://www.omdbapi.com/';
 
+  private urlTrailer:String = "https://www.youtube.com/embed/";
+
   private urlGame:String = "https://api.rawg.io/api/games"
   
   constructor(private http:HttpClient) { }
@@ -109,7 +111,7 @@ export class MediaService {
         if (res["results"].length==0) {
           trailer = null;
         }else{
-          trailer = "https://www.youtube.com/embed/"+res["results"][0]["key"]+"?controls=0";
+          trailer = this.urlTrailer+res["results"][0]["key"]+"?controls=0";
         }
         resolve(trailer);
       });

@@ -3,8 +3,10 @@
     <ion-title>mediaDetails</ion-title>
   </ion-toolbar>
 </ion-header>
+
+<ion-item *ngIf="!checkPromise"><ion-spinner class="spinner" paused={{checkPromise}}></ion-spinner></ion-item>
 <ion-content *ngIf="checkPromise">
-  <ion-item *ngIf="!checkPromise"><ion-spinner class="spinner" paused={{checkPromise}}></ion-spinner></ion-item>
+
   <ion-card *ngIf="media.type=='movie'">
     <iframe [src]="cleanUrl" frameborder="0" class="trailer" allowfullscreen></iframe>
     <ion-card-header>
