@@ -10,10 +10,14 @@ import { FavService } from 'src/app/core/services/fav.service';
 })
 export class FavoritosPage implements OnInit {
 
-  private _favGames;
+  private _favMovies:Array<Multimedia>;
 
   constructor(private router: Router,private fav:FavService) {
-   }
+    // this.fav.mapFav.then((mapa)=>{
+    //   let temp = mapa as Map<String,Multimedia>
+    //   this._favMovies = Array.from(temp.values());
+    // })
+  }
 
   ngOnInit() {
   }
@@ -33,9 +37,7 @@ export class FavoritosPage implements OnInit {
   }
 
   public get favMovies(){
-    return Array.from(this.fav.mapFav.values());
-  }
-  public get favGames(){
-    return this._favGames;
+    this._favMovies = Array.from(this.fav.mapFav.values());
+    return this._favMovies;
   }
 }

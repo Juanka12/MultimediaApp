@@ -25,9 +25,9 @@ export class MediaDetailsPage implements OnInit {
     this.activeRoute.queryParamMap.subscribe(() => {
       var pro: Promise<any> = this.router.getCurrentNavigation().extras.state
         .pasarMedia;
-      pro.then((res) => {
+      pro.then(async (res) => {
         this._media = res;
-        this._saved = this.fav.checkFav(this.media);
+        this._saved = await this.fav.checkFav(this.media);
         let url = this.media.trailer;
         this._cleanUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
         this._checkPromise = true;

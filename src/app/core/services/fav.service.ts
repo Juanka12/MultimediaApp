@@ -11,33 +11,75 @@ export class FavService {
   private db:SQLiteObject;
   private _mapFav:Map<String,Multimedia> = new Map<String,Multimedia>();
 
-  constructor(private platform: Platform, private sqlite: SQLite) {}
+  constructor(private platform: Platform, private sqlite: SQLite) {
+    this.executeSentence('select * from Media',[]).then((data)=>{
+      for (let index = 0; index < data["rows"].length; index++) {
+        let datos = data["rows"].item(index);
+        let media:Multimedia = new Multimedia(datos.src,datos.text,datos.title,JSON.parse(datos.genre),datos.id,datos.rate,datos.type);
+        media.trailer=datos.trailer;
+        this._mapFav.set(media.id,media);
+      }
+    })
+  }
 
    public saveFav(media:Multimedia){
     this._mapFav.set(media.id,media);
-    this.db.executeSql('insert into Media(id,title,text,src,rate,genre,type) values (?,?,?,?,?,?,?,)',[media.id,media.title,media.text,media.src,media.rate,media.genre.toString(),media.type])
-    .then((data)=>{
-      console.log(data);
-    });
+    this.executeSentence('insert into Media(id,title,text,src,rate,genre,type,trailer) values(?,?,?,?,?,?,?,?)',[media.id,media.title,media.text,media.src,media.rate,JSON.stringify(media.genre),media.type,media.trailer])
    }
    public deleteFav(media:Multimedia){
      this._mapFav.delete(media.id);
-     this.db.executeSql('delete from Media where id = ?',[media.id]).then((data)=>{
-      console.log(data);
-    });
+     this.executeSentence('delete from Media where id = ?',[media.id]);
    }
-   public checkFav(media:Multimedia):boolean {
-     this.db.executeSql('select * from Media where id = ?',[media.id]).then((data)=>{
-      console.log(data);
+   public async checkFav(media:Multimedia):Promise<boolean> {
+    let checked=false;
+    await this.executeSentence('select * from Media where id = ?',[media.id]).then((data)=>{
+      checked=Boolean(data["rows"].length);
     });
-    return this._mapFav.has(media.id);
+    return checked;
    }
    public get mapFav(){
-     this.db.executeSql('select * from Media').then((data)=>{
-       console.log(data);
-     });
-     return this._mapFav;
+    //  this._mapFav = new Map<String,Multimedia>();
+    //  return new Promise(async (resolve,reject)=>{
+    //  await this.executeSentence('select * from Media',[]).then((data)=>{
+    //   for (let index = 0; index < data["rows"].length; index++) {
+    //     let datos = data["rows"].item(index);
+    //     let media:Multimedia = new Multimedia(datos.src,datos.text,datos.title,JSON.parse(datos.genre),datos.id,datos.rate,datos.type);
+    //     media.trailer=datos.trailer;
+    //     this._mapFav.set(media.id,media);
+    //   }
+    //  })
+    //  resolve(this._mapFav);
+    // })
+    return this._mapFav;
    }
+
+   executeSentence(sqlSentence: string, searchParam: any[]) {
+    return new Promise(async (resolve,reject) => {
+      let consultable = true;
+      if (!this.db) {
+        await this.openDB()
+        .then(()=>{
+          console.log(this.db);   
+        })
+        .catch((e) => {
+          consultable = false;
+          reject("Fallo al cargar"+e);
+        });
+      }
+      if (consultable) {
+        this.db
+        .executeSql(sqlSentence, searchParam)
+        .then((data) => {
+          console.log("Resuelto : "+JSON.stringify(data));
+          resolve(data);
+        })
+        .catch((e) => {
+          console.log("fallo al ejecutar sentencia "+JSON.stringify(e));
+          reject("Fallo al ejecutar sentencia");
+        });
+      }
+    });
+  }
 
    openDB() {
     return new Promise((resolve,reject) => {

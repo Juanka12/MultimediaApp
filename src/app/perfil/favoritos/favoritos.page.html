@@ -7,7 +7,7 @@
 <ion-content>
   <ion-item><ion-label class="ion-text-center">Lista</ion-label></ion-item>
     <ion-list>
-      <ion-item button *ngFor="let item of (favMovies)" (click)="pasarItem(item)" routerLink="/media-details">
+      <ion-item button *ngFor="let item of favMovies" (click)="pasarItem(item)" routerLink="/media-details">
         <ion-thumbnail slot="start">
           <ion-img src={{item.src}}></ion-img>
         </ion-thumbnail>
