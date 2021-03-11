@@ -19,6 +19,7 @@ export class FavService {
    public checkFav(media:Multimedia):boolean {
     return this._mapFav.has(media.id);
    }
+
    public get mapFav(){
      return this._mapFav;
    }

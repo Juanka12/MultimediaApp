@@ -17,11 +17,11 @@ export class HomePage {
   private _loadedMovies:boolean = false;
 
   constructor(private mediaService: MediaService, private router: Router) {
-    this.mediaService.getRandomMovies("27").then((res)=>{
+    this.mediaService.getRandomMovies().then((res)=>{
       this._searchResultMovies = res;
       this._loadedMovies=true;
     });
-    this.mediaService.getRandomGames("4").then((res)=>{
+    this.mediaService.getRandomGames().then((res)=>{
       this._searchResultGames = res;
       this._loadedGames=true;
     });
@@ -43,6 +43,7 @@ export class HomePage {
     };
     this.router.navigate(['media-details'], navigationExtras);
   }
+
   public search(toSearch){
     this._loadedGames=false;
     this._loadedMovies=false;
@@ -55,12 +56,13 @@ export class HomePage {
       this._loadedGames=true;
     });
   }
+
   public onCancel(){
-    this.mediaService.getRandomMovies("27").then((res)=>{
+    this.mediaService.getRandomMovies().then((res)=>{
       this._searchResultMovies = res;
       this._loadedMovies=true;
     });
-    this.mediaService.getRandomGames("4").then((res)=>{
+    this.mediaService.getRandomGames().then((res)=>{
       this._searchResultGames = res;
       this._loadedGames=true;
     });
