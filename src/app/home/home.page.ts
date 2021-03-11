@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MediaService } from '../core/services/media.service';
 import { Multimedia } from '../core/model/Multimedia';
 import { NavigationExtras, Router } from '@angular/router';
+import { FavService } from '../core/services/fav.service';
 
 @Component({
   selector: 'app-home',
@@ -16,14 +17,18 @@ export class HomePage {
   private _loadedGames:boolean = false;
   private _loadedMovies:boolean = false;
 
-  constructor(private mediaService: MediaService, private router: Router) {
-    this.mediaService.getRandomMovies("27").then((res)=>{
+  constructor(private mediaService: MediaService, private router: Router,private fav:FavService) {
+    this.mediaService.getRandomMovies().then((res)=>{
       this._searchResultMovies = res;
       this._loadedMovies=true;
+    }).catch((err)=>{
+      console.log(err);
     });
-    this.mediaService.getRandomGames("4").then((res)=>{
+    this.mediaService.getRandomGames().then((res)=>{
       this._searchResultGames = res;
       this._loadedGames=true;
+    }).catch((err)=>{
+      console.log(err);
     });
   }
 
@@ -49,20 +54,29 @@ export class HomePage {
     this.mediaService.searchMovie(toSearch).then((res)=>{
       this._searchResultMovies = res;
       this._loadedMovies=true;
+    }).catch((err)=>{
+      console.log(err);
     });
     this.mediaService.searchGame(toSearch).then((res)=>{
       this._searchResultGames = res;
       this._loadedGames=true;
+    }).catch((err)=>{
+      console.log(err);
     });
   }
+
   public onCancel(){
-    this.mediaService.getRandomMovies("27").then((res)=>{
+    this.mediaService.getRandomMovies().then((res)=>{
       this._searchResultMovies = res;
       this._loadedMovies=true;
+    }).catch((err)=>{
+      console.log(err);
     });
-    this.mediaService.getRandomGames("4").then((res)=>{
+    this.mediaService.getRandomGames().then((res)=>{
       this._searchResultGames = res;
       this._loadedGames=true;
+    }).catch((err)=>{
+      console.log(err);
     });
   }
 

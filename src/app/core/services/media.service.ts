@@ -1,7 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { stringify } from '@angular/compiler/src/util';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
 import { Multimedia } from '../model/Multimedia';
 
 @Injectable({
@@ -49,10 +47,10 @@ export class MediaService {
       })
     })
   }
-  public getRandomMovies(genre:string) {
+  public getRandomMovies() {
     let movieList:Array<Multimedia> = new Array<Multimedia>();  
     return new Promise((resolve,reject)=>{
-      this.http.get(this.urlMovie+"discover/movie?api_key="+this.apiMovieKey+"&with_genres="+genre).toPromise().then(res => {
+      this.http.get(this.urlMovie+"movie/popular?api_key="+this.apiMovieKey).toPromise().then(res => {
         res["results"].forEach(movie => {
           movieList.push(new Multimedia("https://image.tmdb.org/t/p/w500"+movie["poster_path"],movie["overview"],movie["title"],movie["genre_ids"],movie["id"],movie["vote_average"],"movie"));
         });
@@ -63,10 +61,10 @@ export class MediaService {
       })
     })
   }
-  public getRandomGames(genre:string) {
+  public getRandomGames() {
     let gameList:Array<Multimedia> = new Array<Multimedia>();
     return new Promise((resolve,reject)=>{
-      this.http.get(this.urlGame+"?genres="+genre).toPromise().then(response => {
+      this.http.get(this.urlGame.toString()).toPromise().then(response => {
         response["results"].forEach(game => {
           gameList.push(new Multimedia(game["background_image"],"",game["name"],game["genres"],game["id"],game["metacritic"],"game"))
         });
@@ -83,9 +81,13 @@ export class MediaService {
         console.log(response);
         var mediaTemp = new Multimedia(media.src,response["overview"],response["title"],response["genres"],response["imdb_id"],response["vote_average"],"movie");
         let trailer = await this.getMovieTrailer(media.id);
+        mediaTemp.date = response["release_date"];
         mediaTemp.trailer = trailer.toString();
         resolve(mediaTemp);
-      });
+      },
+        error=>{
+          reject(error);
+        });
     })
   }
   public getGameData(media:Multimedia){
@@ -101,7 +103,10 @@ export class MediaService {
         }
         mediaTemp.trailer=trailer;
         resolve(mediaTemp);
-      })
+      },
+        error=>{
+          reject(error);
+        })
     })
   }
   public getMovieTrailer(id:string) {
@@ -114,7 +119,10 @@ export class MediaService {
           trailer = this.urlTrailer+res["results"][0]["key"]+"?controls=0";
         }
         resolve(trailer);
-      });
+      },
+        error=>{
+          reject(error);
+        });
     });
   }
 }

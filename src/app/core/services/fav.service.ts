@@ -12,14 +12,6 @@ export class FavService {
   private _mapFav:Map<String,Multimedia> = new Map<String,Multimedia>();
 
   constructor(private platform: Platform, private sqlite: SQLite) {
-    this.executeSentence('select * from Media',[]).then((data)=>{
-      for (let index = 0; index < data["rows"].length; index++) {
-        let datos = data["rows"].item(index);
-        let media:Multimedia = new Multimedia(datos.src,datos.text,datos.title,JSON.parse(datos.genre),datos.id,datos.rate,datos.type);
-        media.trailer=datos.trailer;
-        this._mapFav.set(media.id,media);
-      }
-    })
   }
 
    public saveFav(media:Multimedia){
@@ -37,23 +29,23 @@ export class FavService {
     });
     return checked;
    }
+
    public get mapFav(){
-    //  this._mapFav = new Map<String,Multimedia>();
-    //  return new Promise(async (resolve,reject)=>{
-    //  await this.executeSentence('select * from Media',[]).then((data)=>{
-    //   for (let index = 0; index < data["rows"].length; index++) {
-    //     let datos = data["rows"].item(index);
-    //     let media:Multimedia = new Multimedia(datos.src,datos.text,datos.title,JSON.parse(datos.genre),datos.id,datos.rate,datos.type);
-    //     media.trailer=datos.trailer;
-    //     this._mapFav.set(media.id,media);
-    //   }
-    //  })
-    //  resolve(this._mapFav);
-    // })
     return this._mapFav;
    }
 
-   executeSentence(sqlSentence: string, searchParam: any[]) {
+   public getData(){
+    this.executeSentence('select * from Media',[]).then((data)=>{
+      for (let index = 0; index < data["rows"].length; index++) {
+        let datos = data["rows"].item(index);
+        let media:Multimedia = new Multimedia(datos.src,datos.text,datos.title,JSON.parse(datos.genre),datos.id,datos.rate,datos.type);
+        media.trailer=datos.trailer;
+        this._mapFav.set(media.id,media);
+      }
+    })
+   }
+
+   private executeSentence(sqlSentence: string, searchParam: any[]) {
     return new Promise(async (resolve,reject) => {
       let consultable = true;
       if (!this.db) {
@@ -81,7 +73,7 @@ export class FavService {
     });
   }
 
-   openDB() {
+   private openDB() {
     return new Promise((resolve,reject) => {
     this.platform
       .ready()
@@ -102,6 +94,7 @@ export class FavService {
       });
     });
   }
+
   private getConector() {
     return {
       name: "MultimediaDB.db",
